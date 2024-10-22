@@ -92,7 +92,7 @@ namespace MusicApp.Controllers
             return View(loginDto);
         }
 
-        public IActionResult LogOUt()
+        public IActionResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index");

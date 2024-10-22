@@ -9,7 +9,10 @@ builder.Services.AddDbContext<MusicAppDbContext>(options => options.UseSqlServer
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 // Authentication
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+{
+    options.LoginPath = "/User/Login"; // Redirect to login page if unauthorized
+});
 
 var app = builder.Build();
 

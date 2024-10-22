@@ -14,5 +14,10 @@ namespace MusicApp.Data
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<Song> Songs { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

@@ -1,0 +1,46 @@
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<div class="registration-container">
+    <h1>Welcome to XXX</h1>
+    <img src="~/images/headphones-icon.png" alt="Logo" />
+
+    <div class="buttons">
+        <a href="@Url.Action("Login", "Account")" class="btn">Login</a>
+        <a href="@Url.Action("Signup", "Account")" class="btn">Sign Up</a>
+        <a href="@Url.Action("Index", "Home")" class="guest-link">Continue as Guest</a>
+    </div>
+</div>
+
+<style>
+    .registration-container {
+        text-align: center;
+        padding: 50px;
+        background-color: #ccc;
+        height: 100vh;
+    }
+
+    .btn {
+        display: block;
+        margin: 10px auto;
+        padding: 15px 30px;
+        background-color: #333;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        width: 200px;
+        text-align: center;
+    }
+
+        .btn:hover {
+            background-color: #555;
+        }
+
+    .guest-link {
+        margin-top: 20px;
+        display: block;
+        color: #000;
+        text-decoration: underline;
+    }
+</style>

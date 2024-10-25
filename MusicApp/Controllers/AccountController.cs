@@ -4,28 +4,28 @@ namespace MusicApp.Controllers
 {
     public class AccountController : Controller
     {
-        public IActionResult Login()
+        public IActionResult LoginPage()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public IActionResult LoginPage(string username, string password)
         {
             // Add logic for user authentication
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Signup()
+        public IActionResult SignupPage()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Signup(User user)
+        public IActionResult SignupPage(User user)
         {
             // Add logic to save the user to the database
-            return RedirectToAction("Login");
+            return RedirectToAction("LoginPage");
         }
 
         public IActionResult Profile()

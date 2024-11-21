@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SpotifyMVC.Models;
 using SpotifyMVC.Services;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace SpotifyMVC.Controllers
         public async Task<IActionResult> Search(string query)
         {
             if (string.IsNullOrEmpty(query))
-                return Ok(new List<string>());
+                return Ok(new List<Track>());
 
             var tracks = await _spotifyService.SearchTracksAsync(query);
             return Ok(tracks);

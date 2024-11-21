@@ -1,5 +1,6 @@
 using SpotifyAPI.Web;
 using SpotifyMVC.Models;
+using Category = SpotifyMVC.Models.Category;
 
 namespace SpotifyMVC.Services
 {
@@ -19,19 +20,14 @@ namespace SpotifyMVC.Services
             _spotifyClient = new SpotifyClient(config);
         }
 
-        public async Task<List<string>> SearchTracksAsync(string query)
+        public async Task<List<Track>> SearchTracksAsync(string query)
         {
             try
             {
                 var searchRequest = new SearchRequest(SearchRequest.Types.Track, query);
                 var searchResponse = await _spotifyClient.Search.Item(searchRequest);
 
-                var tracks = new List<string>();
-                foreach (var track in searchResponse.Tracks.Items)
-                {
-                    tracks.Add(track.Name);
-                }
-                return tracks;
+                return searchResponse.Tracks.Items.Select(track => MapToTrack(track)).ToList();
             }
             catch (Exception ex)
             {
@@ -44,13 +40,7 @@ namespace SpotifyMVC.Services
             try
             {
                 var track = await _spotifyClient.Tracks.Get(trackId);
-                return new Track
-                {
-                    Name = track.Name,
-                    Artist = track.Artists[0].Name,
-                    Album = track.Album.Name,
-                    PreviewUrl = track.PreviewUrl
-                };
+                return MapToTrack(track);
             }
             catch (Exception ex)
             {
@@ -58,12 +48,12 @@ namespace SpotifyMVC.Services
             }
         }
 
-        public async Task<List<string>> GetArtistTopTracksAsync(string artistId)
+        public async Task<List<Track>> GetArtistTopTracksAsync(string artistId)
         {
             try
             {
                 var tracks = await _spotifyClient.Artists.GetTopTracks(artistId, new ArtistsTopTracksRequest("US"));
-                return tracks.Tracks.ConvertAll(track => track.Name);
+                return tracks.Tracks.Select(track => MapToTrack(track)).ToList();
             }
             catch (Exception ex)
             {
@@ -71,13 +61,20 @@ namespace SpotifyMVC.Services
             }
         }
 
-        public async Task<List<string>> GetPlaylistTracksAsync(string playlistId)
+        public async Task<PlaylistTracks> GetPlaylistTracksAsync(string playlistId)
         {
             try
             {
                 var tracks = await _spotifyClient.Playlists.GetItems(playlistId);
-                // TODO: Fix this it might not work as expected.
-                return tracks.Items.ConvertAll(item => item.Track.ToString());
+                return new PlaylistTracks
+                {
+                    Total = (int)tracks.Total,
+                    Items = tracks.Items.Select(item => new PlaylistTrack
+                    {
+                        Track = MapToTrack((FullTrack)item.Track),
+                        AddedAt = (DateTime)item.AddedAt
+                    }).ToList()
+                };
             }
             catch (Exception ex)
             {
@@ -90,11 +87,26 @@ namespace SpotifyMVC.Services
             try
             {
                 var featured = await _spotifyClient.Browse.GetFeaturedPlaylists();
-                return featured.Playlists.Items.ConvertAll(playlist => new Playlist
+                return featured.Playlists.Items.Select(playlist => new Playlist
                 {
+                    Id = playlist.Id,
                     Name = playlist.Name,
-                    Url = playlist.ExternalUrls["spotify"]
-                });
+                    Description = playlist.Description,
+                    Images = playlist.Images.Select(img => new SpotifyImage
+                    {
+                        Url = img.Url,
+                        Height = img.Height,
+                        Width = img.Width
+                    }).ToList(),
+                    ExternalUrls = new ExternalUrls { Spotify = playlist.ExternalUrls["spotify"] },
+                    Owner = new PlaylistOwner
+                    {
+                        Id = playlist.Owner.Id,
+                        DisplayName = playlist.Owner.DisplayName,
+                        ExternalUrls = new ExternalUrls { Spotify = playlist.Owner.ExternalUrls["spotify"] }
+                    },
+                    Public = playlist.Public ?? false
+                }).ToList();
             }
             catch (Exception ex)
             {
@@ -110,7 +122,7 @@ namespace SpotifyMVC.Services
                 return newReleases.Albums.Items.ConvertAll(album => new Album
                 {
                     Name = album.Name,
-                    Url = album.ExternalUrls["spotify"]
+                    ExternalUrls = new ExternalUrls { Spotify = album.ExternalUrls["spotify"] }
                 });
             }
             catch (Exception ex)
@@ -119,17 +131,59 @@ namespace SpotifyMVC.Services
             }
         }
 
-        public async Task<List<string>> GetCategoriesAsync()
+        public async Task<List<Category>> GetCategoriesAsync()
         {
             try
             {
                 var categories = await _spotifyClient.Browse.GetCategories();
-                return categories.Categories.Items.ConvertAll(category => category.Name);
+                return categories.Categories.Items.ConvertAll(category => new Category
+                {
+                    Name = category.Name,
+                    Icons = category.Icons.Select(img => new SpotifyImage
+                    {
+                        Url = img.Url,
+                        Height = img.Height,
+                        Width = img.Width
+                    }).ToList()
+                });
             }
             catch (Exception ex)
             {
                 throw new Exception("Error getting categories", ex);
             }
+        }
+
+        private Track MapToTrack(FullTrack spotifyTrack)
+        {
+            return new Track
+            {
+                Id = spotifyTrack.Id,
+                Name = spotifyTrack.Name,
+                Artists = spotifyTrack.Artists.Select(artist => new Artist
+                {
+                    Id = artist.Id,
+                    Name = artist.Name,
+                    ExternalUrls = new ExternalUrls { Spotify = artist.ExternalUrls["spotify"] }
+                }).ToList(),
+                Album = new Album
+                {
+                    Id = spotifyTrack.Album.Id,
+                    Name = spotifyTrack.Album.Name,
+                    Images = spotifyTrack.Album.Images.Select(img => new SpotifyImage
+                    {
+                        Url = img.Url,
+                        Height = img.Height,
+                        Width = img.Width
+                    }).ToList(),
+                    ReleaseDate = spotifyTrack.Album.ReleaseDate,
+                    ReleaseDatePrecision = spotifyTrack.Album.ReleaseDatePrecision,
+                    ExternalUrls = new ExternalUrls { Spotify = spotifyTrack.Album.ExternalUrls["spotify"] }
+                },
+                DurationMs = spotifyTrack.DurationMs,
+                ExternalUrls = new ExternalUrls { Spotify = spotifyTrack.ExternalUrls["spotify"] },
+                PreviewUrl = spotifyTrack.PreviewUrl,
+                IsPlayable = spotifyTrack.IsPlayable
+            };
         }
     }
 }

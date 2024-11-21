@@ -6,13 +6,12 @@ namespace SpotifyMVC.Services
 {
     public interface ISpotifyService
     {
-        // TODO: Add more functions for API calls.
-        Task<List<string>> SearchTracksAsync(string query);
+        Task<List<Track>> SearchTracksAsync(string query);
         Task<Track> GetTrackAsync(string trackId);
-        Task<List<string>> GetArtistTopTracksAsync(string artistId);
-        Task<List<string>> GetPlaylistTracksAsync(string playlistId);
+        Task<List<Track>> GetArtistTopTracksAsync(string artistId);
+        Task<PlaylistTracks> GetPlaylistTracksAsync(string playlistId);
         Task<List<Playlist>> GetFeaturedPlaylistsAsync();
         Task<List<Album>> GetNewReleasesAsync();
-        Task<List<string>> GetCategoriesAsync();
+        Task<List<Category>> GetCategoriesAsync();
     }
 }

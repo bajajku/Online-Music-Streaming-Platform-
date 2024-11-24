@@ -1,48 +1,38 @@
 ﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Home";
 }
 
-<div class="container">
-    <div class="header">
-        <img src="~/images/logo.png" alt="Logo" class="logo" />
-        <div class="profile-search">
-            <a href="@Url.Action("Profile", "Account")">Profile</a>
-            <input type="text" placeholder="Search..." />
-        </div>
-    </div>
+<div class="home-page text-center">
+    <h1>Welcome to MusicApp</h1>
+    <p>Discover new music and explore your favorite albums!</p>
 
-    <div class="featured">
+    <div class="featured-albums mt-4">
         <h2>Featured Albums</h2>
         <div class="album-grid">
-            @* Sample albums; replace with dynamic data *@
-            <div class="album">
+            <div class="album-card">
                 <img src="~/images/sample-album.jpg" alt="Album Cover" />
-                <p>Album Title</p>
+                <h4>Album Title</h4>
                 <p>Artist Name</p>
+                <a href="@Url.Action("AlbumDetails", "Music", new { id = 1 })" class="btn btn-primary">View Album</a>
             </div>
-            <!-- Repeat as needed -->
+            <div class="album-card">
+                <img src="~/images/sample-album.jpg" alt="Album Cover" />
+                <h4>Album Title</h4>
+                <p>Artist Name</p>
+                <a href="@Url.Action("AlbumDetails", "Music", new { id = 2 })" class="btn btn-primary">View Album</a>
+            </div>
         </div>
     </div>
 </div>
 
 <style>
-    .container {
-        padding: 20px;
+    .home-page {
+        padding: 40px;
     }
 
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .profile-search input {
-        margin-left: 10px;
-        padding: 5px;
-    }
-
-    .featured {
-        margin-top: 40px;
+    .featured-albums {
+        margin-top: 30px;
     }
 
     .album-grid {
@@ -50,7 +40,14 @@
         gap: 20px;
     }
 
-    .album {
+    .album-card {
         text-align: center;
+        max-width: 200px;
     }
+
+        .album-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
 </style>

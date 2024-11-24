@@ -3,16 +3,18 @@
 <div class="playlist-container">
     <h2>Your Playlists</h2>
     <div class="row">
-        @foreach (var playlist in Model.Playlists)
+        @for (int i = 0; i < Model.Playlists.Count; i++)
         {
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">@playlist</h5>
-                        <button class="btn btn-primary w-100">View Playlist</button>
+                        <h5 class="card-title">@Model.Playlists[i]</h5>
+                        <a href="@Url.Action("ViewPlaylist", "Playlist", new { id = i + 1 })"
+                           class="btn btn-primary w-100">View Playlist</a>
                     </div>
                 </div>
             </div>
         }
     </div>
 </div>
+

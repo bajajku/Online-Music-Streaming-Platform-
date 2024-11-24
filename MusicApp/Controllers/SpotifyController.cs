@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace SpotifyMVC.Controllers
 {
+
+    /// <summary>
+    /// Controller for Spotify API endpoints
+    /// </summary>
     [ApiController]
     [Route("api")]
     public class SpotifyController : Controller
@@ -16,15 +20,25 @@ namespace SpotifyMVC.Controllers
         {
             _spotifyService = spotifyService;
         }
-
-        [HttpGet("index")]
+        /// <summary>
+        /// Get featured playlists from Spotify API
+        /// </summary>
+        /// <response code="200">Returns the list of featured-playlists</response>
+        /// <response code="500">If the server encountered an error</response>
+        [HttpGet("featured-playlists")]
         public async Task<IActionResult> Index()
         {
+        
             var featuredPlaylists = await _spotifyService.GetFeaturedPlaylistsAsync();
             var newReleases = await _spotifyService.GetNewReleasesAsync();
             return Ok(new { featuredPlaylists, newReleases });
         }
-
+        /// <summary>
+        /// Search for tracks, artists, albums, or playlists
+        /// </summary>
+        /// <param name="query"></param>
+        /// <response code="200">Returns track based on query</response>
+        /// <response code="500">If the server encountered an error</response>
         [HttpGet("search")]
         public async Task<IActionResult> Search(string query)
         {
@@ -34,14 +48,24 @@ namespace SpotifyMVC.Controllers
             var tracks = await _spotifyService.SearchTracksAsync(query);
             return Ok(tracks);
         }
-
+        /// <summary>
+        /// Get a track by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns track object based on trackID</response>
+        /// <response code="500">If the server encountered an error</response>
         [HttpGet("track")]
         public async Task<IActionResult> Track(string id)
         {
             var track = await _spotifyService.GetTrackAsync(id);
             return Ok(track);
         }
-
+        /// <summary>
+        /// Get artist's top tracks by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns the artists top tracks based on artistID</response>
+        /// <response code="500">If the server encountered an error</response>
         [HttpGet("artist/top-tracks")]
         public async Task<IActionResult> ArtistTopTracks(string id)
         {
@@ -49,12 +73,22 @@ namespace SpotifyMVC.Controllers
             return Ok(tracks);
         }
 
+        /// <summary>
+        /// Get playlsit from ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns the playlist based on unique playlistID</response>
+        /// <response code="500">If the server encountered an error</response>
         [HttpGet("playlist")]
         public async Task<IActionResult> PlaylistTracks(string id)
         {
             var tracks = await _spotifyService.GetPlaylistTracksAsync(id);
             return Ok(tracks);
         }
+        /// <summary>
+        /// Get categories from Spotify API
+        /// </summary>
+        /// <response code="200">Returns the list of categories</response>
 
         [HttpGet("categories")]
         public async Task<IActionResult> Categories()

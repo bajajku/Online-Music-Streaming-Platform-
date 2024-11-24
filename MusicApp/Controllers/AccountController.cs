@@ -1,36 +1,41 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MusicApp.Controllers
+public class AccountController : Controller
 {
-    public class AccountController : Controller
+    public IActionResult LoginPage()
     {
-        public IActionResult LoginPage()
-        {
-            return View();
-        }
+        return View();
+    }
 
-        [HttpPost]
-        public IActionResult LoginPage(string username, string password)
+    [HttpPost]
+    public IActionResult LoginPage(string username, string password)
+    {
+        if (username == "test" && password == "123") // Dummy validation
         {
-            // Add logic for user authentication
+            TempData["SuccessMessage"] = "Login successful!";
             return RedirectToAction("Index", "Home");
         }
-
-        public IActionResult SignupPage()
+        else
         {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult SignupPage(User user)
-        {
-            // Add logic to save the user to the database
+            TempData["ErrorMessage"] = "Invalid username or password.";
             return RedirectToAction("LoginPage");
         }
+    }
 
-        public IActionResult Profile()
-        {
-            return View(); // Future profile page
-        }
+    public IActionResult SignupPage()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult SignupPage(User user)
+    {
+        TempData["SuccessMessage"] = "Signup successful! Please login.";
+        return RedirectToAction("LoginPage");
+    }
+
+    public IActionResult Profile()
+    {
+        return View(); // Profile page placeholder
     }
 }

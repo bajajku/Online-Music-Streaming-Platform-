@@ -1,47 +1,14 @@
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Login";
 }
 
-<div class="login-container">
+<div class="login-container text-center">
     <h2>Login</h2>
     <form method="post" action="@Url.Action("LoginPage", "Account")">
-        <input type="text" name="username" placeholder="Username" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <button type="submit" class="btn">Login</button>
+        <input type="text" name="username" placeholder="Username" required class="form-control mb-2" />
+        <input type="password" name="password" placeholder="Password" required class="form-control mb-2" />
+        <button type="submit" class="btn btn-primary w-100">Login</button>
     </form>
-    <a href="@Url.Action("SignupPage", "Account")" class="signup-link">Don't have an account? Sign up</a>
+    <a href="@Url.Action("SignupPage", "Account")" class="text-muted mt-3 d-block">Don't have an account? Sign up</a>
 </div>
-
-<style>
-    .login-container {
-        margin: 50px auto;
-        max-width: 300px;
-        text-align: center;
-    }
-
-    input {
-        display: block;
-        width: 100%;
-        margin: 10px 0;
-        padding: 10px;
-    }
-
-    .btn {
-        width: 100%;
-        padding: 10px;
-        background-color: #333;
-        color: white;
-        border: none;
-        border-radius: 5px;
-    }
-
-        .btn:hover {
-            background-color: #555;
-        }
-
-    .signup-link {
-        margin-top: 15px;
-        display: block;
-        text-decoration: underline;
-    }
-</style>

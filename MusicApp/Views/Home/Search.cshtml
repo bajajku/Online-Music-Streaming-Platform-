@@ -2,6 +2,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Search";
 }
+@model List<MusicApp.Controllers.SearchResult>
 
 <div class="search-page text-center">
     <h1>Search Music</h1>
@@ -10,18 +11,18 @@
         <button type="submit" class="btn btn-primary mt-2">Search</button>
     </form>
 
-    @if (Model?.Results != null)
+    @if (Model != null && Model.Count > 0)
     {
         <div class="search-results">
             <h3>Search Results</h3>
             <div class="result-grid">
-                @foreach (var result in Model.Results)
+                @foreach (var result in Model)
                 {
                     <div class="result-card">
                         <img src="~/images/sample-album.jpg" alt="Result Image" />
                         <h5>@result.Title</h5>
                         <p>@result.Artist</p>
-                        <a href="@Url.Action("AlbumDetails", "Music", new { id = result.Id })" class="btn btn-secondary">View Album</a>
+                        <a href="@Url.Action("AlbumDetails", "Music", new { id = result.Id })" class="btn btn-primary">View Album</a>
                     </div>
                 }
             </div>

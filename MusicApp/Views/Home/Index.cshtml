@@ -1,8 +1,56 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="header">
+        <img src="~/images/logo.png" alt="Logo" class="logo" />
+        <div class="profile-search">
+            <a href="@Url.Action("Profile", "Account")">Profile</a>
+            <input type="text" placeholder="Search..." />
+        </div>
+    </div>
+
+    <div class="featured">
+        <h2>Featured Albums</h2>
+        <div class="album-grid">
+            @* Sample albums; replace with dynamic data *@
+            <div class="album">
+                <img src="~/images/sample-album.jpg" alt="Album Cover" />
+                <p>Album Title</p>
+                <p>Artist Name</p>
+            </div>
+            <!-- Repeat as needed -->
+        </div>
+    </div>
 </div>
+
+<style>
+    .container {
+        padding: 20px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .profile-search input {
+        margin-left: 10px;
+        padding: 5px;
+    }
+
+    .featured {
+        margin-top: 40px;
+    }
+
+    .album-grid {
+        display: flex;
+        gap: 20px;
+    }
+
+    .album {
+        text-align: center;
+    }
+</style>

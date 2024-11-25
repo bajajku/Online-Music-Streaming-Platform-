@@ -4,6 +4,16 @@
 
 <div class="signup-container">
     <h2>Sign Up</h2>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="error-message">@TempData["ErrorMessage"]</div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="success-message">@TempData["SuccessMessage"]</div>
+    }
+
     <form method="post" action="@Url.Action("SignupPage", "Account")">
         <input type="text" name="username" placeholder="Username" required />
         <input type="email" name="email" placeholder="Email" required />
@@ -21,29 +31,46 @@
         text-align: center;
     }
 
+    .btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
     input {
         display: block;
         width: 100%;
         margin: 10px 0;
         padding: 10px;
-    }
-
-    .btn {
-        width: 100%;
-        padding: 10px;
-        background-color: #333;
-        color: white;
-        border: none;
+        border: 1px solid #ccc;
         border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 14px;
     }
 
-        .btn:hover {
-            background-color: #555;
-        }
 
     .login-link {
         margin-top: 15px;
         display: block;
         text-decoration: underline;
+    }
+
+    .error-message {
+        color: red;
+        margin-bottom: 10px;
+    }
+
+    .success-message {
+        color: green;
+        margin-bottom: 10px;
     }
 </style>

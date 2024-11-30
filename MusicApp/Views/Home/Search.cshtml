@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Search";
+}
+
+<div class="search-page text-center">
+    <h1>Search Music</h1>
+    <form method="get" action="@Url.Action("Search", "Home")" class="mb-4">
+        <input type="text" name="query" placeholder="Search for songs, albums, artists..." class="form-control" />
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+
+    @if (Model?.Results != null)
+    {
+        <div class="search-results">
+            <h3>Search Results</h3>
+            <div class="result-grid">
+                @foreach (var result in Model.Results)
+                {
+                    <div class="result-card">
+                        <img src="~/images/sample-album.jpg" alt="Result Image" />
+                        <h5>@result.Title</h5>
+                        <p>@result.Artist</p>
+                        <a href="@Url.Action("AlbumDetails", "Music", new { id = result.Id })" class="btn btn-secondary">View Album</a>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .search-page {
+        padding: 40px;
+    }
+    .search-results {
+        margin-top: 30px;
+    }
+    .result-grid {
+        display: flex;
+        gap: 20px;
+    }
+    .result-card {
+        text-align: center;
+        max-width: 200px;
+    }
+    .result-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+</style>

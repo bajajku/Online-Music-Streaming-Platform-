@@ -1,0 +1,13 @@
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<div class="registration-container text-center">
+    <h1>Welcome to MusicApp</h1>
+    <img src="~/images/headphones-icon.png" alt="Logo" />
+    <div class="buttons mt-4">
+        <a href="@Url.Action("LoginPage", "Account")" class="btn btn-primary">Login</a>
+        <a href="@Url.Action("SignupPage", "Account")" class="btn btn-secondary">Sign Up</a>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-outline-dark">Continue as Guest</a>
+    </div>
+</div>

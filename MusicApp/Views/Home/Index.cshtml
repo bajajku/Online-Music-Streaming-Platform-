@@ -1,8 +1,53 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="home-page text-center">
+    <h1>Welcome to MusicApp</h1>
+    <p>Discover new music and explore your favorite albums!</p>
+
+    <div class="featured-albums mt-4">
+        <h2>Featured Albums</h2>
+        <div class="album-grid">
+            <div class="album-card">
+                <img src="~/images/sample-album.jpg" alt="Album Cover" />
+                <h4>Album Title</h4>
+                <p>Artist Name</p>
+                <a href="@Url.Action("AlbumDetails", "Music", new { id = 1 })" class="btn btn-primary">View Album</a>
+            </div>
+            <div class="album-card">
+                <img src="~/images/sample-album.jpg" alt="Album Cover" />
+                <h4>Album Title</h4>
+                <p>Artist Name</p>
+                <a href="@Url.Action("AlbumDetails", "Music", new { id = 2 })" class="btn btn-primary">View Album</a>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .home-page {
+        padding: 40px;
+    }
+
+    .featured-albums {
+        margin-top: 30px;
+    }
+
+    .album-grid {
+        display: flex;
+        gap: 20px;
+    }
+
+    .album-card {
+        text-align: center;
+        max-width: 200px;
+    }
+
+        .album-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+</style>

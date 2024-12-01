@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MusicApp.Models;
 
 public class AccountController : Controller
 {

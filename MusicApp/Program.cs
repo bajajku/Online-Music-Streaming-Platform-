@@ -33,7 +33,7 @@ if (app.Environment.IsDevelopment())
 
 
 }
-
+app.UseStaticFiles();
 app.UseAuthorization();
 
 app.MapControllerRoute(

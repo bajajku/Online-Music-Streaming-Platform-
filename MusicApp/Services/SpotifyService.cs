@@ -26,6 +26,7 @@ namespace SpotifyMVC.Services
             {
                 var searchRequest = new SearchRequest(SearchRequest.Types.Track, query);
                 var searchResponse = await _spotifyClient.Search.Item(searchRequest);
+                Console.WriteLine($"Search: {query}, Total: {searchResponse.Tracks}");
 
                 return searchResponse.Tracks.Items.Select(track => MapToTrack(track)).ToList();
             }
@@ -155,6 +156,7 @@ namespace SpotifyMVC.Services
 
         private Track MapToTrack(FullTrack spotifyTrack)
         {
+            Console.WriteLine($"Track: {spotifyTrack.Name}, PreviewUrl: {spotifyTrack.PreviewUrl}");
             return new Track
             {
                 Id = spotifyTrack.Id,
@@ -186,4 +188,5 @@ namespace SpotifyMVC.Services
             };
         }
     }
+
 }

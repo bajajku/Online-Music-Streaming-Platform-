@@ -21,19 +21,6 @@ namespace SpotifyMVC.Controllers
             _spotifyService = spotifyService;
         }
         /// <summary>
-        /// Get featured playlists from Spotify API
-        /// </summary>
-        /// <response code="200">Returns the list of featured-playlists</response>
-        /// <response code="500">If the server encountered an error</response>
-        [HttpGet("featured-playlists")]
-        public async Task<IActionResult> Index()
-        {
-        
-            var featuredPlaylists = await _spotifyService.GetFeaturedPlaylistsAsync();
-            var newReleases = await _spotifyService.GetNewReleasesAsync();
-            return Ok(new { featuredPlaylists, newReleases });
-        }
-        /// <summary>
         /// Search for tracks, artists, albums, or playlists
         /// </summary>
         /// <param name="query"></param>
@@ -95,6 +82,13 @@ namespace SpotifyMVC.Controllers
         {
             var categories = await _spotifyService.GetCategoriesAsync();
             return Ok(categories);
+        }
+
+        [HttpGet("new-releases")]
+        public async Task<IActionResult> NewReleases()
+        {
+            var albums = await _spotifyService.GetNewReleasesAsync();
+            return Ok(albums);
         }
     }
 }

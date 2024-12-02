@@ -83,55 +83,6 @@ namespace SpotifyMVC.Services
             }
         }
 
-        public async Task<List<Playlist>> GetFeaturedPlaylistsAsync()
-        {
-            try
-            {
-                var featured = await _spotifyClient.Browse.GetFeaturedPlaylists();
-                return featured.Playlists.Items.Select(playlist => new Playlist
-                {
-                    Id = playlist.Id,
-                    Name = playlist.Name,
-                    Description = playlist.Description,
-                    Images = playlist.Images.Select(img => new SpotifyImage
-                    {
-                        Url = img.Url,
-                        Height = img.Height,
-                        Width = img.Width
-                    }).ToList(),
-                    ExternalUrls = new ExternalUrls { Spotify = playlist.ExternalUrls["spotify"] },
-                    Owner = new PlaylistOwner
-                    {
-                        Id = playlist.Owner.Id,
-                        DisplayName = playlist.Owner.DisplayName,
-                        ExternalUrls = new ExternalUrls { Spotify = playlist.Owner.ExternalUrls["spotify"] }
-                    },
-                    Public = playlist.Public ?? false
-                }).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error getting featured playlists", ex);
-            }
-        }
-
-        public async Task<List<Album>> GetNewReleasesAsync()
-        {
-            try
-            {
-                var newReleases = await _spotifyClient.Browse.GetNewReleases();
-                return newReleases.Albums.Items.ConvertAll(album => new Album
-                {
-                    Name = album.Name,
-                    ExternalUrls = new ExternalUrls { Spotify = album.ExternalUrls["spotify"] }
-                });
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error getting new releases", ex);
-            }
-        }
-
         public async Task<List<Category>> GetCategoriesAsync()
         {
             try
@@ -151,6 +102,19 @@ namespace SpotifyMVC.Services
             catch (Exception ex)
             {
                 throw new Exception("Error getting categories", ex);
+            }
+        }
+
+        public async Task<List<Album>> GetNewReleasesAsync()
+        {
+            try
+            {
+                var newReleases = await _spotifyClient.Browse.GetNewReleases();
+                return newReleases.Albums.Items.Select(album => MapToAlbum(album)).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error getting new releases", ex);
             }
         }
 
@@ -185,6 +149,31 @@ namespace SpotifyMVC.Services
                 ExternalUrls = new ExternalUrls { Spotify = spotifyTrack.ExternalUrls["spotify"] },
                 PreviewUrl = spotifyTrack.PreviewUrl,
                 IsPlayable = spotifyTrack.IsPlayable
+            };
+        }
+
+
+        private Album MapToAlbum(SimpleAlbum spotifyAlbum)
+        {
+            return new Album
+            {
+                Id = spotifyAlbum.Id,
+                Name = spotifyAlbum.Name,
+                Images = spotifyAlbum.Images.Select(img => new SpotifyImage
+                {
+                    Url = img.Url,
+                    Height = img.Height,
+                    Width = img.Width
+                }).ToList(),
+                ReleaseDate = spotifyAlbum.ReleaseDate,
+                ReleaseDatePrecision = spotifyAlbum.ReleaseDatePrecision,
+                ExternalUrls = new ExternalUrls { Spotify = spotifyAlbum.ExternalUrls["spotify"] },
+                Artists = spotifyAlbum.Artists.Select(artist => new Artist
+                {
+                    Id = artist.Id,
+                    Name = artist.Name,
+                    ExternalUrls = new ExternalUrls { Spotify = artist.ExternalUrls["spotify"] }
+                }).ToList()
             };
         }
     }

@@ -12,5 +12,6 @@ namespace SpotifyMVC.Services
         Task<PlaylistTracks> GetPlaylistTracksAsync(string playlistId);
         Task<List<Category>> GetCategoriesAsync();
         Task<List<Album>> GetNewReleasesAsync();
+        Task<Album> GetAlbumAsync(string albumId);
     }
 }

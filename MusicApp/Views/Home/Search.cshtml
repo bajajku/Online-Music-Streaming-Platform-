@@ -40,7 +40,7 @@
             <p class="mb-1">${(track.durationMs / 60000).toFixed(2)} mins</p>
         </div>
         <div class="actions ms-auto">
-            <a href="${track.externalUrls.spotify}" target="_blank" class="btn btn-primary">Open in Spotify</a>
+            <a href="/Music/AlbumDetails?id=${track.album.id}" class="btn btn-primary">View Album Details</a>
         </div>
     </div>
 `).join('');

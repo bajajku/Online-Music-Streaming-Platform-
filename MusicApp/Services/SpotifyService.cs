@@ -118,6 +118,39 @@ namespace SpotifyMVC.Services
             }
         }
 
+        public async Task<Album> GetAlbumAsync(string albumId)
+        {
+            try
+            {
+                var spotifyAlbum = await _spotifyClient.Albums.Get(albumId);
+                return new Album
+                {
+                    Id = spotifyAlbum.Id,
+                    Name = spotifyAlbum.Name,
+                    Images = spotifyAlbum.Images.Select(img => new SpotifyImage
+                    {
+                        Url = img.Url,
+                        Height = img.Height,
+                        Width = img.Width
+                    }).ToList(),
+                    ReleaseDate = spotifyAlbum.ReleaseDate,
+                    ReleaseDatePrecision = spotifyAlbum.ReleaseDatePrecision,
+                    ExternalUrls = new ExternalUrls { Spotify = spotifyAlbum.ExternalUrls["spotify"] },
+                    Artists = spotifyAlbum.Artists.Select(artist => new Artist
+                    {
+                        Id = artist.Id,
+                        Name = artist.Name,
+                        ExternalUrls = new ExternalUrls { Spotify = artist.ExternalUrls["spotify"] }
+                    }).ToList()
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error fetching album details", ex);
+            }
+        }
+
+
         private Track MapToTrack(FullTrack spotifyTrack)
         {
             Console.WriteLine($"Track: {spotifyTrack.Name}, PreviewUrl: {spotifyTrack.PreviewUrl}");

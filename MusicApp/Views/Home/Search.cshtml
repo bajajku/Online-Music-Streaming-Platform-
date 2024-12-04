@@ -3,98 +3,146 @@
     ViewData["Title"] = "Search";
 }
 
-<div class="search-page text-center">
-    <h1>Search Music</h1>
-    <form id="searchForm" class="mb-4">
-        <input type="text" id="searchQuery" placeholder="Search for songs..." class="form-control" />
-        <button type="submit" class="btn btn-primary mt-2">Search</button>
+<div class="search-page">
+    <h1 class="white-text">🔍 Search Music</h1>
+    <p class="search-subtitle">Find songs, albums, or artists effortlessly!</p>
+    <form id="searchForm" class="search-form">
+        <input type="text" id="searchQuery" placeholder="Search for songs, albums, or artists..." class="form-control" />
+        <button type="submit" class="btn btn-primary mt-3">Search</button>
     </form>
 
-    <div id="searchResults" class="result-list"></div>
+    <div id="searchResults" class="search-results"></div>
 </div>
 
 <script>
-    document.getElementById('searchForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const query = document.getElementById('searchQuery').value.trim();
-        const resultsContainer = document.getElementById('searchResults');
-        resultsContainer.innerHTML = `<p>Searching...</p>`;
+document.getElementById('searchForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const query = document.getElementById('searchQuery').value.trim();
+    const resultsContainer = document.getElementById('searchResults');
+    resultsContainer.innerHTML = `<p class="white-text">Searching...</p>`;
 
-        if (!query) {
-            resultsContainer.innerHTML = `<p>Please enter a search query.</p>`;
+    if (!query) {
+        resultsContainer.innerHTML = `<p class="white-text">Please enter a search query.</p>`;
+        return;
+    }
+
+    try {
+        const results = await spotifyService.searchTracks(query);
+        if (results.length === 0) {
+            resultsContainer.innerHTML = `<p class="white-text">No tracks found. Try a different search!</p>`;
             return;
         }
 
-        try {
-            const results = await spotifyService.searchTracks(query);
-            if (results.length === 0) {
-                resultsContainer.innerHTML = `<p>No tracks found.</p>`;
-                return;
-            }
-            resultsContainer.innerHTML = results.map(track => `
-    <div class="result-item d-flex align-items-center mb-3">
-        <img src="${track.album.images[0]?.url || '/images/default-album.jpg'}" alt="Album Cover" class="album-cover me-3" />
-        <div class="track-info text-start">
-            <h5 class="mb-1">${track.name}</h5>
-            <p class="mb-1">${track.artists.map(artist => artist.name).join(", ")}</p>
-            <p class="mb-1">${(track.durationMs / 60000).toFixed(2)} mins</p>
-        </div>
-        <div class="actions ms-auto">
-            <a href="/Music/AlbumDetails?id=${track.album.id}" class="btn btn-primary">View Album Details</a>
-        </div>
-    </div>
-`).join('');
+        resultsContainer.innerHTML = results.map(track => `
+            <div class="result-card" data-external-url="${track.externalUrls.spotify}" data-album-id="${track.album.id}">
+                <div class="card-content">
+                    <img src="${track.album.images[0]?.url || '/images/default-album.jpg'}" alt="Album Cover" class="album-cover" />
+                    <h5 class="white-text">${track.name}</h5>
+                    <p>${track.artists.map(artist => artist.name).join(", ")}</p>
+                    <p>${(track.durationMs / 60000).toFixed(2)} mins</p>
+                    <a href="/Music/AlbumDetails?id=${track.album.id}" class="btn btn-outline-primary view-album-btn">View Album</a>
+                </div>
+            </div>
+        `).join('');
 
-        } catch (error) {
-            console.error(error);
-            resultsContainer.innerHTML = `<p>Error: Unable to fetch results</p>`;
-        }
-    });
+        // Add event listeners to handle card clicks
+        document.querySelectorAll('.result-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                // Check if the clicked element or its parent is the "View Album" button
+                const viewAlbumBtn = e.target.closest('.view-album-btn');
+                
+                if (!viewAlbumBtn) {
+                    // If not clicking on the "View Album" button, open external Spotify URL
+                    const externalUrl = card.dataset.externalUrl;
+                    window.open(externalUrl, '_blank');
+                }
+            });
+        });
+
+    } catch (error) {
+        console.error(error);
+        resultsContainer.innerHTML = `<p class="white-text">Error: Unable to fetch results.</p>`;
+    }
+});
 </script>
 
 <style>
     .search-page {
-        padding: 40px;
+        padding: 50px;
+        background: linear-gradient(145deg, #1e1e1e, #2e2e2e);
+        text-align: center;
     }
 
-    .result-list {
-        margin-top: 20px;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
+    .search-subtitle {
+        color: #ccc;
+        margin-bottom: 20px;
     }
 
-    .result-item {
+    .search-form input {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .search-results {
+        margin-top: 40px;
         display: flex;
-        align-items: center;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #f9f9f9;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
     }
 
-    .result-item:not(:last-child) {
-        margin-bottom: 15px;
+    .result-card {
+        width: 220px;
+        height: 320px;
+        text-align: center;
+        background: linear-gradient(145deg, #202020, #303030);
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
-    .album-cover {
-        width: 60px;
-        height: 60px;
-        border-radius: 5px;
-        object-fit: cover;
+    .result-card img {
+        width: 100%;
+        height: 140px;
+        border-radius: 10px;
+        object-fit: cover; /* Ensures images fit neatly within the card */
+        margin-bottom: 10px;
     }
 
-    .track-info h5 {
+    .result-card h5 {
+        color: #fff;
         font-size: 16px;
-        margin: 0;
+        margin: 5px 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden; /* Prevents overflow for long titles */
     }
 
-    .track-info p {
+    .result-card p {
+        color: #aaa;
         font-size: 14px;
-        margin: 0;
+        margin: 5px 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden; /* Ensures consistent text presentation */
     }
 
-    .actions .audio-player {
-        width: 150px;
+    .result-card {
+    cursor: pointer; /* Indicates the card is clickable */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.result-card:hover {
+    transform: scale(1.05); /* Slightly enlarge the card on hover */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7); /* Enhanced shadow on hover */
+    background: linear-gradient(145deg, #303030, #404040); /* Subtle color change on hover */
+}
+
+    .result-card .btn {
+        margin-top: 10px;
+        align-self: center;
     }
 </style>

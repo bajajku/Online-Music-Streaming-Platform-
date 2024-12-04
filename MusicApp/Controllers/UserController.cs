@@ -95,14 +95,14 @@ namespace MusicApp.Controllers
         public IActionResult LogOut()
         {
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index");
+            return RedirectToAction("RegistrationPage", "Home");
         }
 
         [Authorize]
         public IActionResult SecurePage()
         {
             ViewBag.Name = HttpContext.User.Identity.Name;
-            return View();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

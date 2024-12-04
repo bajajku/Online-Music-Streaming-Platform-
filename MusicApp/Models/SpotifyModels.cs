@@ -6,6 +6,7 @@ namespace SpotifyMVC.Models
 {
     public class SpotifyImage
     {
+        public string Id { get; set; }
         public string Url { get; set; }
         public int? Height { get; set; }
         public int? Width { get; set; }
@@ -63,18 +64,21 @@ namespace SpotifyMVC.Models
 
     public class PlaylistTracks
     {
+        public string Id { get; set; }
         public int Total { get; set; }
         public List<PlaylistTrack> Items { get; set; }
     }
 
     public class PlaylistTrack
     {
+        public string Id { get; set; }
         public Track Track { get; set; }
         public DateTime AddedAt { get; set; }
     }
 
     public class ExternalUrls
     {
+        public string Id { get; set; }
         public string Spotify { get; set; }
     }
 

@@ -7,8 +7,12 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
-builder.Services.AddDbContext<MusicAppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+//builder.Services.AddDbContext<MusicAppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddDbContext<MusicAppDbContext>(options =>
+    options.UseSqlite(configuration.GetConnectionString("DefaultConnection"))
+);
 // Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {

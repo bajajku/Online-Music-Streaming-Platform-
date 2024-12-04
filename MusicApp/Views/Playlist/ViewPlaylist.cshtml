@@ -1,13 +1,13 @@
-﻿@model Playlist
+﻿@model SpotifyMVC.Models.Playlist
 
 <div class="playlist-details">
     <h2>@Model.Name</h2>
     <ul class="song-list">
-        @foreach (var song in Model.Songs)
+        @foreach (var song in Model.Tracks.Items)
         {
             <li>
-                <strong>@song.Title</strong> by <span style="color: var(--accent-color);">@song.Artist</span>
-                <span class="duration">(@song.Duration)</span>
+                <strong>@song.Track.Name</strong> by <span style="color: var(--accent-color);">@song.Track.Artists</span>
+                <span class="duration">(@song.Track.DurationMs)</span>
             </li>
         }
     </ul>
@@ -19,6 +19,7 @@
     .playlist-details {
         padding: 50px;
         background: linear-gradient(145deg, #1e1e1e, #2e2e2e);
+    using SpotifyMVC.Models;
         border-radius: 15px;
         color: #fff;
     }

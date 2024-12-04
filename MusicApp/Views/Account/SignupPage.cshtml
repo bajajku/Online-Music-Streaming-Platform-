@@ -1,49 +1,46 @@
-@{
-    ViewData["Title"] = "Signup";
-}
+﻿<div class="signup-container">
+    <h2>🎵 Join MusicApp</h2>
+    <p class="signup-subtitle">Start creating your playlists today!</p>
 
-<div class="signup-container">
-    <h2>Sign Up</h2>
     <form method="post" action="@Url.Action("SignupPage", "Account")">
-        <input type="text" name="username" placeholder="Username" required />
-        <input type="email" name="email" placeholder="Email" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <button type="submit" class="btn">Sign Up</button>
+        <input type="text" name="username" placeholder="Username" required class="form-control mb-3" />
+        <input type="email" name="email" placeholder="Email" required class="form-control mb-3" />
+        <input type="password" name="password" placeholder="Password" required class="form-control mb-3" />
+        <button type="submit" class="btn btn-success w-100">Sign Up</button>
     </form>
-    <a href="@Url.Action("LoginPage", "Account")" class="login-link">Already have an account? Login</a>
+    <a href="@Url.Action("LoginPage", "Account")" class="text-muted mt-3 d-block">
+        Already have an account? <strong style="color: var(--primary-color);">Login</strong>
+    </a>
 </div>
-
 
 <style>
     .signup-container {
-        margin: 50px auto;
-        max-width: 300px;
+        margin: 100px auto;
+        max-width: 400px;
+        background: linear-gradient(145deg, #202020, #303030);
+        border-radius: 15px;
+        padding: 30px;
         text-align: center;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+
+        .signup-container h2 {
+            font-size: 32px;
+            color: var(--accent-color);
+        }
+
+    .signup-subtitle {
+        color: var(--text-muted);
+        margin-bottom: 20px;
     }
 
     input {
-        display: block;
-        width: 100%;
-        margin: 10px 0;
-        padding: 10px;
-    }
-
-    .btn {
-        width: 100%;
-        padding: 10px;
+        border-radius: 50px;
         background-color: #333;
-        color: white;
-        border: none;
-        border-radius: 5px;
+        color: var(--text-color);
     }
 
-        .btn:hover {
-            background-color: #555;
+        input:focus {
+            border-color: var(--accent-color);
         }
-
-    .login-link {
-        margin-top: 15px;
-        display: block;
-        text-decoration: underline;
-    }
 </style>

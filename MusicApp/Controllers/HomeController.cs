@@ -15,7 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return RedirectToAction("RegistrationPage");
+        return View();
     }
 
 
@@ -34,4 +34,22 @@ public IActionResult Error()
 {
     return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 }
+public IActionResult Search(string query)
+    {
+        // Implement search logic here
+        var results = new List<SearchResult>
+        {
+            new SearchResult { Id = 1, Title = "Album Title", Artist = "Artist Name" },
+            new SearchResult { Id = 2, Title = "Another Album", Artist = "Another Artist" }
+        };
+
+        return View(results); // Pass results to the Search view
+    }
+}
+
+public class SearchResult
+{
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Artist { get; set; }
 }

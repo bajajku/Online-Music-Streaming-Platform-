@@ -1,56 +1,50 @@
-﻿@{
-    ViewData["Title"] = "Home";
-}
+﻿<div class="home-page">
+    <h1>🎧 Welcome to MusicApp</h1>
+    <p class="home-subtitle">Discover new music and explore your favorite albums.</p>
 
-<div class="container">
-    <div class="header">
-        <img src="~/images/logo.png" alt="Logo" class="logo" />
-        <div class="profile-search">
-            <a href="@Url.Action("Profile", "Account")">Profile</a>
-            <input type="text" placeholder="Search..." />
-        </div>
-    </div>
-
-    <div class="featured">
-        <h2>Featured Albums</h2>
+    <div class="featured-albums mt-4">
+        <h2>🌟 Featured Albums</h2>
         <div class="album-grid">
-            @* Sample albums; replace with dynamic data *@
-            <div class="album">
+            @* Repeat album cards dynamically *@
+            <div class="album-card">
                 <img src="~/images/sample-album.jpg" alt="Album Cover" />
-                <p>Album Title</p>
-                <p>Artist Name</p>
+                <h4>Album Title</h4>
+                <p>By Artist Name</p>
+                <a href="@Url.Action("AlbumDetails", "Music", new { id = 1 })" class="btn btn-outline-primary">View Album</a>
             </div>
-            <!-- Repeat as needed -->
+            <!-- More Album Cards -->
         </div>
     </div>
 </div>
 
 <style>
-    .container {
-        padding: 20px;
+    .home-page {
+        padding: 50px;
+        background: linear-gradient(145deg, #1e1e1e, #2e2e2e);
+        color: var(--text-color);
     }
 
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .profile-search input {
-        margin-left: 10px;
-        padding: 5px;
-    }
-
-    .featured {
-        margin-top: 40px;
+    .featured-albums h2 {
+        color: var(--primary-color);
     }
 
     .album-grid {
         display: flex;
+        flex-wrap: wrap;
         gap: 20px;
+        justify-content: center;
     }
 
-    .album {
+    .album-card {
+        max-width: 200px;
         text-align: center;
+        background: linear-gradient(145deg, #202020, #303030);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
     }
+
+        .album-card img {
+            border-radius: 10px;
+        }
 </style>

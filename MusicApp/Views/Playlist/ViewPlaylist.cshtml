@@ -1,0 +1,64 @@
+﻿@model SpotifyMVC.Models.Playlist
+
+<div class="playlist-details">
+    <h2>@Model.Name</h2>
+    <ul class="song-list">
+        @foreach (var song in Model.Tracks.Items)
+        {
+            <li>
+                <strong>@song.Track.Name</strong> by <span style="color: var(--accent-color);">@song.Track.Artists</span>
+                <span class="duration">(@song.Track.DurationMs)</span>
+            </li>
+        }
+    </ul>
+</div>
+
+<a href="@Url.Action("Index", "Playlist")" class="btn btn-primary">Back to Playlists</a>
+
+<style>
+    .playlist-details {
+        padding: 50px;
+        background: linear-gradient(145deg, #1e1e1e, #2e2e2e);
+    using SpotifyMVC.Models;
+        border-radius: 15px;
+        color: #fff;
+    }
+
+    .playlist-details h2 {
+        font-size: 32px;
+        color: var(--primary-color); /* Title color */
+        margin-bottom: 20px;
+    }
+
+    .song-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .song-list li {
+        font-size: 18px;
+        margin: 15px 0;
+        color: #ddd;
+    }
+
+    .song-list li .duration {
+        color: var(--text-muted);
+        font-size: 14px;
+    }
+
+    a.btn {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 12px 20px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 30px;
+        text-decoration: none;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    a.btn:hover {
+        background-color: #0056b3;
+    }
+</style>

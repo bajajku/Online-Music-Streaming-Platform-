@@ -1,24 +1,111 @@
+/* General Theme Colors */
+:root {
+    --primary-color: #ff6f61; /* Vibrant coral red */
+    --secondary-color: #ffd700; /* Golden yellow */
+    --accent-color: #1db954; /* Spotify green */
+    --background-color: #121212; /* Rich black */
+    --text-color: #ffffff; /* White */
+    --text-muted: #b3b3b3; /* Muted white */
+}
+
+/* Body Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
 }
 
-.registration-container, .login-container, .playlist-container {
-    margin: 50px auto;
-    max-width: 500px;
-    text-align: center;
-}
-
+/* Buttons */
 .btn {
     padding: 10px 20px;
-    border-radius: 5px;
-    display: inline-block;
-    margin-top: 10px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.music-player .album-cover img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-color);
+    box-shadow: 0 4px 10px rgba(255, 111, 97, 0.5);
+}
+
+    .btn-primary:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 15px rgba(255, 111, 97, 0.7);
+    }
+
+.btn-secondary {
+    background: var(--accent-color);
+    color: var(--text-color);
+    box-shadow: 0 4px 10px rgba(29, 185, 84, 0.5);
+}
+
+    .btn-secondary:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 15px rgba(29, 185, 84, 0.7);
+    }
+
+/* Cards */
+.card {
+    background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+    color: var(--text-muted);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+    }
+
+/* Animations */
+@keyframes glow {
+    0% {
+        box-shadow: 0 0 10px var(--primary-color);
+    }
+
+    50% {
+        box-shadow: 0 0 20px var(--secondary-color);
+    }
+
+    100% {
+        box-shadow: 0 0 10px var(--primary-color);
+    }
+}
+
+.card:hover {
+    animation: glow 2s infinite;
+}
+
+/* Inputs */
+input {
+    padding: 10px;
+    border-radius: 50px;
+    border: none;
+    outline: none;
+    background-color: #333;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+    input:focus {
+        box-shadow: 0 0 10px var(--accent-color);
+    }
+
+/* Headers and Text */
+h1, h2, h3 {
+    text-transform: uppercase;
+    color: var(--primary-color);
+}
+
+p {
+    color: var(--text-muted);
 }

@@ -1,53 +1,50 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Home";
-}
-
-<div class="home-page text-center">
-    <h1>Welcome to MusicApp</h1>
-    <p>Discover new music and explore your favorite albums!</p>
+﻿<div class="home-page">
+    <h1>🎧 Welcome to MusicApp</h1>
+    <p class="home-subtitle">Discover new music and explore your favorite albums.</p>
 
     <div class="featured-albums mt-4">
-        <h2>Featured Albums</h2>
+        <h2>🌟 Featured Albums</h2>
         <div class="album-grid">
+            @* Repeat album cards dynamically *@
             <div class="album-card">
                 <img src="~/images/sample-album.jpg" alt="Album Cover" />
                 <h4>Album Title</h4>
-                <p>Artist Name</p>
-                <a href="@Url.Action("AlbumDetails", "Music", new { id = 1 })" class="btn btn-primary">View Album</a>
+                <p>By Artist Name</p>
+                <a href="@Url.Action("AlbumDetails", "Music", new { id = 1 })" class="btn btn-outline-primary">View Album</a>
             </div>
-            <div class="album-card">
-                <img src="~/images/sample-album.jpg" alt="Album Cover" />
-                <h4>Album Title</h4>
-                <p>Artist Name</p>
-                <a href="@Url.Action("AlbumDetails", "Music", new { id = 2 })" class="btn btn-primary">View Album</a>
-            </div>
+            <!-- More Album Cards -->
         </div>
     </div>
 </div>
 
 <style>
     .home-page {
-        padding: 40px;
+        padding: 50px;
+        background: linear-gradient(145deg, #1e1e1e, #2e2e2e);
+        color: var(--text-color);
     }
 
-    .featured-albums {
-        margin-top: 30px;
+    .featured-albums h2 {
+        color: var(--primary-color);
     }
 
     .album-grid {
         display: flex;
+        flex-wrap: wrap;
         gap: 20px;
+        justify-content: center;
     }
 
     .album-card {
-        text-align: center;
         max-width: 200px;
+        text-align: center;
+        background: linear-gradient(145deg, #202020, #303030);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
     }
 
         .album-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
+            border-radius: 10px;
         }
 </style>

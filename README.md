@@ -1,24 +1,24 @@
 # Online-Music-Streaming-Platform-
 
-Add Read Me file to understand overall project progress. Provides the steps so far implemented. The templatre is given below:
-
 For a quick and minimal README file, focus on these core sections:
 
 ---
 
-# Project Name
+# Online Music Streaming Platform
 
-**Brief Description**: One sentence summarizing the project’s purpose.
+This is a full-stack web application for an online music streaming platform. It allows users to register,
+log in, search for music, view album details, manage playlists, and use a music player to listen to songs.
 
 ## Getting Started
 
 ### Prerequisites
-- List any key requirements (e.g., Node.js, Python).
+-.NET SDK: Required for running the application.
+- Visual Studio or Visual Studio Code
 
 ### Installation
 1. **Clone the repo**:
    ```bash
-   git clone https://github.com/username/projectname.git
+   git clone https://github.com/bajajku/Online-Music-Streaming-Platform-.git
    ```
 2. **Install dependencies**:
    ```bash
@@ -31,12 +31,17 @@ For a quick and minimal README file, focus on these core sections:
    ```
 
 ## Usage
-
-Briefly describe how to use the application or provide an example command.
+Sign Up: Create a new account by providing your username, email, and password.
+Login: Log in using your username and password.
+Search Music: Find songs, albums, or artists in the search bar.
+Manage Playlists: Create and manage playlists to organize your favourite songs.
+Music Player: Play, pause, and skip songs from the built-in music player.
 
 ## Features
-
-- List the primary features (e.g., CRUD operations, authentication).
+User Authentication: Allows users to sign up, log in, and manage profiles.
+Search: Find songs, albums, and artists.
+Playlist Management: Users can create, edit, and view playlists.
+Music Player: Built-in player to listen to songs with basic controls.
 
 ## License
 

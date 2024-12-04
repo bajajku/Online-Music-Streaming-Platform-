@@ -1,24 +1,21 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Album Details";
-}
-
-<div class="album-details text-center">
-    <h1>Album Title</h1>
-    <div class="album-info">
+﻿<div class="album-details">
+    <h1>🎼 <span style="color: var(--primary-color);">Album Title</span></h1>
+    <div class="album-header d-flex">
         <img src="~/images/sample-album.jpg" alt="Album Cover" class="album-cover" />
-        <h3>Artist Name</h3>
-        <p>Release Date: January 1, 2024</p>
-        <p>Genre: Pop</p>
+        <div class="album-info">
+            <h3>Artist: <span style="color: var(--accent-color);">Artist Name</span></h3>
+            <p>Release Date: <span style="color: var(--text-muted);">January 1, 2024</span></p>
+            <p>Genre: <span style="color: var(--secondary-color);">Pop</span></p>
+        </div>
     </div>
 
     <div class="album-songs mt-4">
         <h2>Songs</h2>
         <ul class="song-list">
-            <li>Song Title 1 - 3:30</li>
-            <li>Song Title 2 - 4:00</li>
-            <li>Song Title 3 - 3:45</li>
-            <li>Song Title 4 - 2:55</li>
+            <li><strong>Song 1</strong> - 3:30</li>
+            <li><strong>Song 2</strong> - 4:00</li>
+            <li><strong>Song 3</strong> - 3:45</li>
+            <li><strong>Song 4</strong> - 2:55</li>
         </ul>
     </div>
 </div>
@@ -26,25 +23,20 @@
 <style>
     .album-details {
         padding: 40px;
+        background: linear-gradient(145deg, #212121, #323232);
+        border-radius: 15px;
+        color: var(--text-color);
     }
-    .album-info {
-        margin-top: 20px;
-        text-align: center;
+
+    .album-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 30px;
     }
+
     .album-cover {
         width: 200px;
         height: 200px;
-        object-fit: cover;
-        border-radius: 5px;
-    }
-    .album-songs {
-        margin-top: 30px;
-    }
-    .song-list {
-        list-style-type: none;
-        padding: 0;
-    }
-    .song-list li {
-        margin-bottom: 10px;
-    }
-</style>
+        border-radius: 10px;
+        box-shadow

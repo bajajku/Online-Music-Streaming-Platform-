@@ -1,6 +1,4 @@
-﻿@model dynamic
-
-<div class="playlist-container">
+﻿<div class="playlist-container">
     <h2>Your Playlists</h2>
     <div class="row">
         @for (int i = 0; i < Model.Playlists.Count; i++)
@@ -18,3 +16,23 @@
     </div>
 </div>
 
+<style>
+    .playlist-container {
+        padding: 50px;
+        background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+        border-radius: 15px;
+        color: var(--text-color);
+    }
+
+    .card {
+        background: linear-gradient(145deg, #292929, #393939);
+        color: var(--text-color);
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.7);
+        }
+</style>

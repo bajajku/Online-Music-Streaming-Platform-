@@ -1,13 +1,53 @@
-@{
-    ViewData["Title"] = "Registration";
-}
-
 <div class="registration-container text-center">
-    <h1>Welcome to MusicApp</h1>
-    <img src="~/images/headphones-icon.png" alt="Logo" />
+    <h1>Welcome to <span style="color: var(--primary-color);">MusicApp</span></h1>
+    <img src="~/images/headphones-icon.png" alt="Logo" class="logo mt-3" />
+    <p class="registration-subtitle">Your music journey begins here!</p>
     <div class="buttons mt-4">
         <a href="@Url.Action("LoginPage", "Account")" class="btn btn-primary">Login</a>
         <a href="@Url.Action("SignupPage", "Account")" class="btn btn-secondary">Sign Up</a>
-        <a href="@Url.Action("Index", "Home")" class="btn btn-outline-dark">Continue as Guest</a>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-outline-light">Continue as Guest</a>
     </div>
 </div>
+
+<style>
+    .registration-container {
+        padding: 50px;
+        background: linear-gradient(145deg, #1a1a1a, #292929);
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        margin: 50px auto;
+        max-width: 400px;
+    }
+    .registration-container h1 {
+        font-size: 36px;
+        color: var(--primary-color);
+    }
+    .registration-container .logo {
+        max-width: 150px;
+    }
+    .registration-container .registration-subtitle {
+        color: var(--text-muted);
+        margin-top: 10px;
+    }
+    .buttons a {
+        display: block;
+        margin: 10px auto;
+        padding: 12px;
+        border-radius: 30px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .btn-primary {
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        color: #fff;
+    }
+    .btn-secondary {
+        background: var(--accent-color);
+        color: #fff;
+    }
+    .btn-outline-light {
+        background: transparent;
+        border: 2px solid var(--text-color);
+        color: var(--text-color);
+    }
+</style>

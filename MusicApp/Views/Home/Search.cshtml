@@ -1,53 +1,64 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Search";
-}
-@model List<MusicApp.Controllers.SearchResult>
-
-<div class="search-page text-center">
-    <h1>Search Music</h1>
-    <form method="get" action="@Url.Action("Search", "Home")" class="mb-4">
-        <input type="text" name="query" placeholder="Search for songs, albums, artists..." class="form-control" />
-        <button type="submit" class="btn btn-primary mt-2">Search</button>
+﻿<div class="search-page">
+    <h1 class="white-text">🔍 Search for Music</h1>
+    <p class="search-subtitle">Find your favorite songs, albums, or artists in seconds!</p>
+    <form method="get" action="@Url.Action("Search", "Home")" class="search-form">
+        <input type="text" name="query" placeholder="Search for songs, albums, or artists..." class="form-control" />
+        <button type="submit" class="btn btn-primary mt-3">Search</button>
     </form>
 
     @if (Model != null && Model.Count > 0)
     {
-        <div class="search-results">
-            <h3>Search Results</h3>
+        <div class="search-results mt-4">
+            <h2 class="white-text">Results</h2>
             <div class="result-grid">
                 @foreach (var result in Model)
                 {
                     <div class="result-card">
                         <img src="~/images/sample-album.jpg" alt="Result Image" />
-                        <h5>@result.Title</h5>
+                        <h5 class="white-text">@result.Title</h5>
                         <p>@result.Artist</p>
-                        <a href="@Url.Action("AlbumDetails", "Music", new { id = result.Id })" class="btn btn-primary">View Album</a>
+                        <a href="@Url.Action("AlbumDetails", "Music", new { id = result.Id })" class="btn btn-outline-primary">View Album</a>
                     </div>
                 }
             </div>
         </div>
     }
+    else
+    {
+        <p class="no-results mt-4">No results found. Try a different search!</p>
+    }
 </div>
 
 <style>
     .search-page {
-        padding: 40px;
+        padding: 50px;
+        background: linear-gradient(145deg, #1e1e1e, #2e2e2e);
     }
+
+    .white-text {
+        color: #fff; /* Ensure the text is white */
+    }
+
     .search-results {
-        margin-top: 30px;
+        margin-top: 40px;
     }
+
     .result-grid {
         display: flex;
         gap: 20px;
+        justify-content: center;
     }
+
     .result-card {
-        text-align: center;
         max-width: 200px;
+        text-align: center;
+        background: linear-gradient(145deg, #202020, #303030);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
     }
-    .result-card img {
-        width: 100%;
-        height: auto;
-        border-radius: 5px;
-    }
+
+        .result-card h5 {
+            color: #fff; /* Album title color */
+        }
 </style>

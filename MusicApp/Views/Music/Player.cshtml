@@ -1,17 +1,42 @@
-﻿@{
-    ViewData["Title"] = "Music Player";
-}
-
-<div class="music-player text-center">
-    <h1>Now Playing</h1>
-    <div class="album-cover">
-        <img src="~/images/sample-album.jpg" alt="Album Cover" />
+﻿<div class="music-player text-center">
+    <h1>🎶 Now Playing</h1>
+    <div class="player-header">
+        <img src="~/images/sample-album.jpg" alt="Album Cover" class="album-cover" />
+        <h2><span style="color: var(--primary-color);">Song Title</span></h2>
+        <h3>Artist: <span style="color: var(--accent-color);">Artist Name</span></h3>
     </div>
-    <h2>Song Title</h2>
-    <h3>Artist Name</h3>
     <div class="player-controls">
-        <button class="btn btn-secondary">Previous</button>
-        <button class="btn btn-primary">Play</button>
-        <button class="btn btn-secondary">Next</button>
+        <button class="btn btn-secondary">⏮ Previous</button>
+        <button class="btn btn-primary">▶️ Play</button>
+        <button class="btn btn-secondary">⏭ Next</button>
     </div>
 </div>
+
+<style>
+    .music-player {
+        padding: 40px;
+        background: linear-gradient(145deg, #191919, #282828);
+        border-radius: 15px;
+        color: var(--text-color);
+        max-width: 600px;
+        margin: 50px auto;
+    }
+
+    .player-header {
+        margin-bottom: 30px;
+    }
+
+    .album-cover {
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        margin-bottom: 20px;
+    }
+
+    .player-controls {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+</style>

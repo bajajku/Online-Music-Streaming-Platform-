@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SpotifyMVC.Models;
 
 namespace MusicApp.Data
 {

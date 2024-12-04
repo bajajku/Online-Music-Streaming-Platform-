@@ -14,11 +14,11 @@
     </div>
 
     <div class="album-songs mt-4">
-        <h2>Songs</h2>
+        <h2>Artists</h2>
         <ul class="song-list">
-            @foreach (var track in Model.Artists)
+            @foreach (var artist in Model.Artists)
             {
-                <li>@track.Name - @track.ExternalUrls.Spotify</li>
+            <li><a href="@artist.ExternalUrls.Spotify">@artist.Name</a></li>
             }
         </ul>
     </div>

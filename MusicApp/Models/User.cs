@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using SpotifyMVC.Models;
 
 [Index(nameof(Email), IsUnique = true)]
 [Index(nameof(Username), IsUnique = true)]
-using SpotifyMVC.Models;
+
 
 public class User
 {

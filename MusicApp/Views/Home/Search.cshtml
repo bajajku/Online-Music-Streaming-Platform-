@@ -15,16 +15,18 @@
 </div>
 
 <script>
-document.getElementById('searchForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const query = document.getElementById('searchQuery').value.trim();
-    const resultsContainer = document.getElementById('searchResults');
-    resultsContainer.innerHTML = `<p class="white-text">Searching...</p>`;
+const searchInput = document.getElementById('searchQuery');
+const resultsContainer = document.getElementById('searchResults');
+
+searchInput.addEventListener('input', debounce(async (e) => {
+    const query = e.target.value.trim();
 
     if (!query) {
         resultsContainer.innerHTML = `<p class="white-text">Please enter a search query.</p>`;
         return;
     }
+
+    resultsContainer.innerHTML = `<p class="white-text">Searching...</p>`;
 
     try {
         const results = await spotifyService.searchTracks(query);
@@ -48,11 +50,9 @@ document.getElementById('searchForm').addEventListener('submit', async (e) => {
         // Add event listeners to handle card clicks
         document.querySelectorAll('.result-card').forEach(card => {
             card.addEventListener('click', (e) => {
-                // Check if the clicked element or its parent is the "View Album" button
                 const viewAlbumBtn = e.target.closest('.view-album-btn');
                 
                 if (!viewAlbumBtn) {
-                    // If not clicking on the "View Album" button, open external Spotify URL
                     const externalUrl = card.dataset.externalUrl;
                     window.open(externalUrl, '_blank');
                 }
@@ -63,7 +63,15 @@ document.getElementById('searchForm').addEventListener('submit', async (e) => {
         console.error(error);
         resultsContainer.innerHTML = `<p class="white-text">Error: Unable to fetch results.</p>`;
     }
-});
+}, 300)); // Debounce delay of 300ms
+
+function debounce(func, delay) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+}
 </script>
 
 <style>

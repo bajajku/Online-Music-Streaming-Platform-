@@ -9,30 +9,30 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg" style="background: linear-gradient(45deg, #1a1a1a, #333333); color: var(--text-color);">
-            <a class="navbar-brand" href="@Url.Action("Index", "Home")" style="color: var(--text-color) !important;">MusicApp</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="@Url.Action("LoginPage", "Account")" style="color: var(--text-color) !important;">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="@Url.Action("SignupPage", "Account")" style="color: var(--text-color) !important;">Sign Up</a></li>
-                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Search", "Home")" style="color: var(--text-color) !important;">Search</a></li>
-                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Playlist")" style="color: var(--text-color) !important;">Playlists</a></li>
-                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Player", "Music")" style="color: var(--text-color) !important;">Music Player</a></li>
-                </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">MusicApp</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Search", "Home")">Search</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Playlist")">Playlists</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Player", "Music")">Music Player</a></li>
+                    </ul>
+                    @await Html.PartialAsync("_LoginPartial")
+                </div>
             </div>
         </nav>
     </header>
-    <main class="container mt-4 p-4 rounded" style="background-color: var(--background-dark); color: var(--text-color); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);">
+    <main class="container mt-4">
         @RenderBody()
     </main>
     <footer class="text-center mt-5">
-        <p style="color: var(--text-muted);">&copy; 2024 Stream Squad. All rights reserved.</p>
+        <p>&copy; 2024 Stream Squad. All rights reserved.</p>
     </footer>
-        @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 <script src="/js/spotifyService.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

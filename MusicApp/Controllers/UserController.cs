@@ -104,5 +104,12 @@ namespace MusicApp.Controllers
             ViewBag.Name = HttpContext.User.Identity.Name;
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult IsUserLoggedIn()
+        {
+            var isLoggedIn = HttpContext.User.Identity?.IsAuthenticated ?? false;
+            return Json(new { IsLoggedIn = isLoggedIn });
+        }
+
     }
 }

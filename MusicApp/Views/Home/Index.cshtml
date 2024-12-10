@@ -1,50 +1,29 @@
-﻿<div class="home-page">
-    <h1>🎧 Welcome to MusicApp</h1>
-    <p class="home-subtitle">Discover new music and explore your favorite albums.</p>
+﻿@using SpotifyMVC.Models;
+@model List<Album>
 
-    <div class="featured-albums mt-4">
-        <h2>🌟 Featured Albums</h2>
-        <div class="album-grid">
-            @* Repeat album cards dynamically *@
+<div class="featured-albums mt-4">
+    <h2>🌟 Featured Albums</h2>
+    <div class="album-grid">
+        @foreach (var album in Model)
+        {
             <div class="album-card">
-                <img src="~/images/sample-album.jpg" alt="Album Cover" />
-                <h4>Album Title</h4>
-                <p>By Artist Name</p>
-                <a href="@Url.Action("AlbumDetails", "Music", new { id = 1 })" class="btn btn-outline-primary">View Album</a>
+                @if (album.Images != null && album.Images.Any())
+                {
+                    <img src="@album.Images.FirstOrDefault()?.Url" alt="@album.Name Album Cover" class="album-cover" />
+                }
+                else
+                {
+                    <div class="no-image-placeholder">No Image Available</div>
+                }
+                
+                <h4>@album.Name</h4>
+                <p class="album-artists">
+                    By @(album.Artists != null 
+                        ? string.Join(", ", ((IEnumerable<Artist>)album.Artists).Select(a => a.Name)) 
+                        : "Unknown Artist")
+                </p>
+                <a href="@Url.Action("AlbumDetails", "Music", new { id = album.Id })" class="btn btn-outline-primary">View Album</a>
             </div>
-            <!-- More Album Cards -->
-        </div>
+        }
     </div>
 </div>
-
-<style>
-    .home-page {
-        padding: 50px;
-        background: linear-gradient(145deg, #1e1e1e, #2e2e2e);
-        color: var(--text-color);
-    }
-
-    .featured-albums h2 {
-        color: var(--primary-color);
-    }
-
-    .album-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
-    }
-
-    .album-card {
-        max-width: 200px;
-        text-align: center;
-        background: linear-gradient(145deg, #202020, #303030);
-        border-radius: 10px;
-        padding: 10px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-    }
-
-        .album-card img {
-            border-radius: 10px;
-        }
-</style>

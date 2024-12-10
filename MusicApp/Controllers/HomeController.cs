@@ -1,21 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
 using MusicApp.Models;
 using System.Diagnostics;
+using SpotifyMVC.Services;
 
 namespace MusicApp.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly ISpotifyService _spotifyService;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, ISpotifyService spotifyService)
     {
         _logger = logger;
+        _spotifyService = spotifyService;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var newReleases = await _spotifyService.GetNewReleasesAsync();
+        return View(newReleases);
     }
 
 

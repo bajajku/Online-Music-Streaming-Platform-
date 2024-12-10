@@ -1,16 +1,17 @@
-@model SpotifyMVC.Models.Album
+﻿@model SpotifyMVC.Models.Album
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Album Details";
 }
 
-<div class="album-details text-center">
+<div class="album-details">
     <h1>@Model.Name</h1>
     <div class="album-info">
         <img src="@Model.Images.FirstOrDefault()?.Url" alt="Album Cover" class="album-cover" />
-        <h3>@string.Join(", ", Model.Artists.Select(a => a.Name))</h3>
-        <p>Release Date: @Model.ReleaseDate</p>
+        <h3>By: @string.Join(", ", Model.Artists.Select(a => a.Name))</h3>
+        <p><strong>Release Date:</strong> @Model.ReleaseDate (@Model.ReleaseDatePrecision)</p>
+        <a href="@Model.ExternalUrls?.Spotify" target="_blank" class="btn btn-primary">Open in Spotify</a>
     </div>
 
     <div class="album-songs mt-4">
@@ -18,31 +19,58 @@
         <ul class="song-list">
             @foreach (var artist in Model.Artists)
             {
-            <li><a href="@artist.ExternalUrls.Spotify">@artist.Name</a></li>
+                <li>
+                    <a href="@artist.ExternalUrls?.Spotify" target="_blank" class="artist-link">
+                        @artist.Name
+                    </a>
+                </li>
             }
         </ul>
     </div>
 </div>
 
 <style>
+    :root {
+        --text-color: #e0e0e0;
+        --primary-color: #1db954;
+    }
+
     .album-details {
         padding: 40px;
         background: linear-gradient(145deg, #212121, #323232);
         border-radius: 15px;
         color: var(--text-color);
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+        font-family: Arial, sans-serif;
     }
 
     .album-info {
         margin-top: 20px;
-        text-align: center;
     }
 
-
     .album-cover {
-        width: 200px;
-        height: 200px;
+        width: 300px;
+        height: 300px;
         object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
         border-radius: 5px;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #1aa34a;
     }
 
     .album-songs {
@@ -54,9 +82,17 @@
         padding: 0;
     }
 
-        .song-list li {
-            margin-bottom: 10px;
-        }
+    .song-list li {
+        margin-bottom: 10px;
+    }
+
+    .artist-link {
+        color: var(--primary-color);
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .artist-link:hover {
+        color: #1aa34a;
+    }
 </style>
-
-

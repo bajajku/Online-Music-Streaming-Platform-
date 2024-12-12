@@ -33,4 +33,7 @@ public class User
     
     public bool IsPremium { get; set; }
     public ICollection<Playlist>? Playlists { get; set; }
+
+    public ICollection<Album> Albums { get; set; } = new List<Album>();
+
 }

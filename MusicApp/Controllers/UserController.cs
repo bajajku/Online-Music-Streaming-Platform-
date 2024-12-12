@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MusicApp.Data;
 using MusicApp.Models.Dtos;
+using SpotifyMVC.Models;
 using System.Security.Claims;
 
 namespace MusicApp.Controllers
@@ -39,6 +40,8 @@ namespace MusicApp.Controllers
                 user.LastName = registrationDto.LastName;
                 user.Password = registrationDto.Password;
                 user.Username = registrationDto.Username;
+                user.IsPremium = false;
+                user.Albums = new List<Album>();
 
                 try
                 {
@@ -110,6 +113,38 @@ namespace MusicApp.Controllers
             var isLoggedIn = HttpContext.User.Identity?.IsAuthenticated ?? false;
             return Json(new { IsLoggedIn = isLoggedIn });
         }
+
+        [HttpPost]
+[Authorize]
+public IActionResult AddAlbumToUser(string albumId)
+{
+    var userEmail = HttpContext.User.Identity?.Name;
+    if (userEmail == null)
+    {
+        return Unauthorized();
+    }
+
+    var user = _context.Users.Include(u => u.Albums).FirstOrDefault(u => u.Email == userEmail);
+    if (user == null)
+    {
+        return NotFound("User not found.");
+    }
+
+    var album = _context.Albums.FirstOrDefault(a => a.Id == albumId);
+    if (album == null)
+    {
+        return NotFound("Album not found.");
+    }
+
+    if (!user.Albums.Contains(album))
+    {
+        user.Albums.Add(album);
+        _context.SaveChanges();
+    }
+
+    return Json(new { success = true, message = "Album added successfully." });
+}
+
 
     }
 }

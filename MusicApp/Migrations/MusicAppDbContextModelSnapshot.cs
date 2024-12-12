@@ -17,6 +17,21 @@ namespace MusicApp.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
 
+            modelBuilder.Entity("AlbumUser", b =>
+                {
+                    b.Property<string>("AlbumsId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AlbumsId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserAlbums", (string)null);
+                });
+
             modelBuilder.Entity("Song", b =>
                 {
                     b.Property<Guid>("Id")
@@ -348,6 +363,21 @@ namespace MusicApp.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("AlbumUser", b =>
+                {
+                    b.HasOne("SpotifyMVC.Models.Album", null)
+                        .WithMany()
+                        .HasForeignKey("AlbumsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SpotifyMVC.Models.Album", b =>

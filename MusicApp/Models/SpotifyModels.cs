@@ -1,6 +1,7 @@
 // Models/SpotifyModels.cs
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SpotifyMVC.Models
 {
@@ -34,7 +35,10 @@ namespace SpotifyMVC.Models
 
     public class Album
     {
+        [Key]
         public string Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
         public List<Artist> Artists { get; set; }
         public List<SpotifyImage> Images { get; set; }

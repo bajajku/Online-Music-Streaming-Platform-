@@ -17,8 +17,14 @@ namespace MusicApp.Data
         public DbSet<Subscription> Subscriptions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
+{
+    base.OnModelCreating(modelBuilder);
+
+    modelBuilder.Entity<User>()
+        .HasMany(u => u.Albums)
+        .WithMany()
+        .UsingEntity(j => j.ToTable("UserAlbums"));
+}
+
     }
 }

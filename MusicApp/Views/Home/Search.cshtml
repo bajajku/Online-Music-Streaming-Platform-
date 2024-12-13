@@ -65,6 +65,41 @@ searchInput.addEventListener('input', debounce(async (e) => {
     }
 }, 300)); // Debounce delay of 300ms
 
+const searchForm = document.getElementById('searchForm');
+searchForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const query = searchInput.value.trim();
+    if (!query) {
+        resultsContainer.innerHTML = `<p class="white-text">Please enter a search query.</p>`;
+        return;
+    }
+    
+    resultsContainer.innerHTML = `<p class="white-text">Searching...</p>`;
+    try {
+        const results = await spotifyService.searchTracks(query);
+        // Reuse the existing results rendering logic
+        if (results.length === 0) {
+            resultsContainer.innerHTML = `<p class="white-text">No tracks found. Try a different search!</p>`;
+            return;
+        }
+        
+        resultsContainer.innerHTML = results.map(track => `
+            <div class="result-card" data-external-url="${track.externalUrls.spotify}" data-album-id="${track.album.id}">
+                <div class="card-content">
+                    <img src="${track.album.images[0]?.url || '/images/default-album.jpg'}" alt="Album Cover" class="album-cover" />
+                    <h5 class="white-text">${track.name}</h5>
+                    <p>${track.artists.map(artist => artist.name).join(", ")}</p>
+                    <p>${(track.durationMs / 60000).toFixed(2)} mins</p>
+                    <a href="/Music/AlbumDetails?id=${track.album.id}" class="btn btn-outline-primary view-album-btn">View Album</a>
+                </div>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error(error);
+        resultsContainer.innerHTML = `<p class="white-text">Error: Unable to fetch results.</p>`;
+    }
+});
+
 function debounce(func, delay) {
     let timeout;
     return function(...args) {
